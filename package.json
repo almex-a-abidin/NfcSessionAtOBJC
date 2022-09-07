@@ -1,0 +1,17 @@
+{
+  "name": "NfcSessionAtOBJC",
+  "version": "1.0.0",
+  "description": "ALmex NFC plugin",
+  "cordova": {
+    "id": "cordova-plugin-nfc-session-atobjc",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "Art John",
+  "license": "ISC"
+}

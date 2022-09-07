@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-nfc-session-atobjc" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+   <name>NfcSessionAtOBJC</name>
+   <js-module name="NfcSessionAtOBJC" src="www/NfcSessionAtOBJC.js">
+      <clobbers target="cordova.plugins.NfcSessionAtOBJC" />
+   </js-module>
+   <platform name="ios">
+      <config-file parent="/*" target="config.xml">
+         <feature name="NfcSessionAtOBJC">
+            <param name="ios-package" value="NfcSessionAtOBJC" />
+         </feature>
+      </config-file>
+      <source-file src="src/ios/NfcSessionAtOBJC.m" />
+   </platform>
+</plugin>
