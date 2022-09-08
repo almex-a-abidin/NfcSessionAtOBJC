@@ -12,5 +12,8 @@
       </config-file>
       <header-file src="src/ios/NfcSessionAtOBJC.h" />
       <source-file src="src/ios/NfcSessionAtOBJC.m" />
+
+      <header-file src="src/ios/TagDataAtOBJC.h" />
+      <source-file src="src/ios/TagDataAtOBJC.m" />
    </platform>
 </plugin>
