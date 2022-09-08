@@ -9,8 +9,7 @@
 #import "NfcSessionAtOBJC.h"
 
 
-@interface NfcSessionAtOBJC()
-
+@interface NfcSessionAtOBJC {
 //@property (nonatomic, assign) BOOL writeMode;
 @property (nonatomic, assign) BOOL shouldUseTagReaderSession;
 @property (nonatomic, assign) BOOL sendCallbackOnSessionStart;
@@ -21,14 +20,21 @@
 
 @property (strong,nonatomic) NFCTagReaderSession *session API_AVAILABLE(ios(13.0));
 @property (nonatomic) TagDataAtOBJC *tagOBJC;
+}
 
+- (void)beginScan:(CDVInvokedUrlCommand*)command;
+
+- (void)tagReaderSession:(nonnull NFCTagReaderSession *)session didInvalidateWithError:(nonnull NSError *)error 
+
+- (void)tagReaderSession:(NFCTagReaderSession *)session didDetectTags:(NSArray<__kindof id<NFCTag>> *)tags 
 @end
 
 @implementation NfcSessionAtOBJC
 @synthesize delegate;
 
 // セッション開始メソッド
-- (void)beginScan {
+- (void)beginScan:(CDVInvokedUrlCommand*)command
+ {
     // 返却データの初期化
     self.tagOBJC = [[TagDataAtOBJC alloc] init];
     // セッションの作成
@@ -44,13 +50,15 @@
 }
 
 // NFCTagReaderSessionDelegate 終了時
-- (void)tagReaderSession:(nonnull NFCTagReaderSession *)session didInvalidateWithError:(nonnull NSError *)error {
+- (void)tagReaderSession:(nonnull NFCTagReaderSession *)session didInvalidateWithError:(nonnull NSError *)error 
+{
     // セッションのクリア
     self.session = nil;
 }
 
 // NFCTagReaderSessionDelegate タグ取得時
-- (void)tagReaderSession:(NFCTagReaderSession *)session didDetectTags:(NSArray<__kindof id<NFCTag>> *)tags {
+- (void)tagReaderSession:(NFCTagReaderSession *)session didDetectTags:(NSArray<__kindof id<NFCTag>> *)tags 
+{
     
     // 複数検出時
     if (tags.count > 1) {
