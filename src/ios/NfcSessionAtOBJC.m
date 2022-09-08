@@ -9,8 +9,9 @@
 #import "NfcSessionAtOBJC.h"
 
 
-@interface NfcSessionAtOBJC {
+@interface NfcSessionAtOBJC() {
 //@property (nonatomic, assign) BOOL writeMode;
+}
 @property (nonatomic, assign) BOOL shouldUseTagReaderSession;
 @property (nonatomic, assign) BOOL sendCallbackOnSessionStart;
 @property (nonatomic, assign) BOOL returnTagInCallback;
@@ -20,13 +21,6 @@
 
 @property (strong,nonatomic) NFCTagReaderSession *session API_AVAILABLE(ios(13.0));
 @property (nonatomic) TagDataAtOBJC *tagOBJC;
-}
-
-- (void)beginScan:(CDVInvokedUrlCommand*)command;
-
-- (void)tagReaderSession:(nonnull NFCTagReaderSession *)session didInvalidateWithError:(nonnull NSError *)error 
-
-- (void)tagReaderSession:(NFCTagReaderSession *)session didDetectTags:(NSArray<__kindof id<NFCTag>> *)tags 
 @end
 
 @implementation NfcSessionAtOBJC
