@@ -10,6 +10,9 @@
             <param name="ios-package" value="NfcSessionAtOBJC" />
          </feature>
       </config-file>
+      <header-file src="src/ios/NfcSessionAtOBJC.h" />
+      <header-file src="src/ios/TagDataAtOBJC.h" />
       <source-file src="src/ios/NfcSessionAtOBJC.m" />
+      <source-file src="src/ios/TagDataAtOBJC.m" />
    </platform>
 </plugin>
