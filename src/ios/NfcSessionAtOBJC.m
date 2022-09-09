@@ -9,26 +9,26 @@
 #import "NfcSessionAtOBJC.h"
 
 
-@interface NfcSessionAtOBJC() {
+@interface NfcSessionAtOBJC()
+
 //@property (nonatomic, assign) BOOL writeMode;
-}
-// @property (nonatomic, assign) BOOL shouldUseTagReaderSession;
-// @property (nonatomic, assign) BOOL sendCallbackOnSessionStart;
-// @property (nonatomic, assign) BOOL returnTagInCallback;
-// @property (nonatomic, assign) BOOL returnTagInEvent;
-// @property (nonatomic, assign) BOOL keepSessionOpen;
-// @property (strong, nonatomic) NFCReaderSession *nfcSession API_AVAILABLE(ios(11.0));
+@property (nonatomic, assign) BOOL shouldUseTagReaderSession;
+@property (nonatomic, assign) BOOL sendCallbackOnSessionStart;
+@property (nonatomic, assign) BOOL returnTagInCallback;
+@property (nonatomic, assign) BOOL returnTagInEvent;
+@property (nonatomic, assign) BOOL keepSessionOpen;
+@property (strong, nonatomic) NFCReaderSession *nfcSession API_AVAILABLE(ios(11.0));
 
 @property (strong,nonatomic) NFCTagReaderSession *session API_AVAILABLE(ios(13.0));
 @property (nonatomic) TagDataAtOBJC *tagOBJC;
+
 @end
 
 @implementation NfcSessionAtOBJC
 @synthesize delegate;
 
 // セッション開始メソッド
-- (void)beginScan:(CDVInvokedUrlCommand*)command
- {
+- (void)beginScan {
     // 返却データの初期化
     self.tagOBJC = [[TagDataAtOBJC alloc] init];
     // セッションの作成
@@ -44,15 +44,13 @@
 }
 
 // NFCTagReaderSessionDelegate 終了時
-- (void)tagReaderSession:(nonnull NFCTagReaderSession *)session didInvalidateWithError:(nonnull NSError *)error 
-{
+- (void)tagReaderSession:(nonnull NFCTagReaderSession *)session didInvalidateWithError:(nonnull NSError *)error {
     // セッションのクリア
     self.session = nil;
 }
 
 // NFCTagReaderSessionDelegate タグ取得時
-- (void)tagReaderSession:(NFCTagReaderSession *)session didDetectTags:(NSArray<__kindof id<NFCTag>> *)tags 
-{
+- (void)tagReaderSession:(NFCTagReaderSession *)session didDetectTags:(NSArray<__kindof id<NFCTag>> *)tags {
     
     // 複数検出時
     if (tags.count > 1) {
