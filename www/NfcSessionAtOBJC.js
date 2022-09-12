@@ -1,5 +1,5 @@
 var exec = require('cordova/exec');
 
-exports.beginScan = function (success, error) {
-    exec(success, error, 'NfcSessionAtOBJC', 'beginScan', []);
+module.exports.beginScan = function (arg0, success, error) {
+    exec(success, error, 'NfcSessionAtOBJC', 'beginScan', [arg0]);
 };
