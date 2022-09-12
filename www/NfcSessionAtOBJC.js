@@ -1,7 +1,7 @@
 var exec = require('cordova/exec');
 
-exports.beginScan = function (arg0, success, error) {
-    exec(success, error, 'NfcSessionAtOBJC', 'beginScan', [arg0]);
+exports.beginScan = function ( success, error) {
+    exec(success, error, 'NfcSessionAtOBJC', 'beginScan', []);
 };
 
 exports.tagReaderSession = function (arg0, success, error) {
