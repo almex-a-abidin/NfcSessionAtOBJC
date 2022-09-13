@@ -17,9 +17,7 @@
     id<NfcSessionAtOBJCDelegate> delegate;
 }
 
-//@property(nonatomic, retain) id<NfcSessionAtOBJCDelegate> delegate;
 @property(nonatomic, retain) id<NfcSessionAtOBJCDelegate> _Nullable delegate;
-@property (nonatomic, assign) BOOL writeMode;
 
 -(void)beginScan;
 

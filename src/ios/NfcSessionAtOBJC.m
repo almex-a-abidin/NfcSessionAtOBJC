@@ -11,14 +11,6 @@
 
 @interface NfcSessionAtOBJC()
 
-//@property (nonatomic, assign) BOOL writeMode;
-@property (nonatomic, assign) BOOL shouldUseTagReaderSession;
-@property (nonatomic, assign) BOOL sendCallbackOnSessionStart;
-@property (nonatomic, assign) BOOL returnTagInCallback;
-@property (nonatomic, assign) BOOL returnTagInEvent;
-@property (nonatomic, assign) BOOL keepSessionOpen;
-@property (strong, nonatomic) NFCReaderSession *nfcSession API_AVAILABLE(ios(11.0));
-
 @property (strong,nonatomic) NFCTagReaderSession *session API_AVAILABLE(ios(13.0));
 @property (nonatomic) TagDataAtOBJC *tagOBJC;
 
