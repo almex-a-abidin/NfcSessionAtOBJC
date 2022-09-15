@@ -2,8 +2,8 @@ var exec = require('cordova/exec');
 
 function NfcSessionAtOBJC() {};
 
-NfcSessionAtOBJC.prototype.beginScan = function () {
-    exec(null, null, 'NfcSessionAtOBJC', 'beginScan', []);
+NfcSessionAtOBJC.prototype.beginScan = function (success, error) {
+    exec(success, error, 'NfcSessionAtOBJC', 'beginScan', []);
 };
 
 
