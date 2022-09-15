@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NfcSessionAtOBJC.h"
-
+#import <CoreNFC/CoreNFC.h>
 
 @interface NfcSessionAtOBJC()
 
