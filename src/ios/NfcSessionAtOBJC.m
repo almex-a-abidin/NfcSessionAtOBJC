@@ -22,7 +22,7 @@
 // セッション開始メソッド
 - (void)beginScan {
     // 返却データの初期化
-    self.tagOBJC = [[TagDataAtOBJC alloc] init];
+    // self.tagOBJC = [[TagDataAtOBJC alloc] init];
     // セッションの作成
     self.session = [[NFCTagReaderSession new]
                 initWithPollingOption: (NFCPollingISO14443 | NFCPollingISO15693)
