@@ -38,7 +38,7 @@ import CoreNFC
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         // 複数検出した場合
 
-        var sample  {
+        var sample = {
             name: "Art John Abidin",
             age: "29"
         }
