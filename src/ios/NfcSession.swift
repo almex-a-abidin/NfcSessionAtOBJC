@@ -39,16 +39,17 @@ import CoreNFC
         // 複数検出した場合
         if tags.count > 1 {
             // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
-            session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-            return
+            self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
+            self.session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            self.commandDelegate!.send(self.pluginResult, callbackId: self.command.callbackId);
         }
         
         // タグがなかった場合
-        guard let tag = tags.first else {
-            // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
-            session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-            return
-        }
+        // guard let tag = tags.first else {
+        //     // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
+        //     self.session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+        //     return
+        // }
         
         // if case .miFare(let miFareTag) = tag {
         //     let tagData = TagData()
