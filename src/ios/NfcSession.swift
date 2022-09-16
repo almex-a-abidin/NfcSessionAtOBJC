@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import CoreNFC
 
-class NfcSession: NSObject {
+@objc(NfcSession) class NfcSession: CDVPlugin {
     var session: NFCTagReaderSession?
     // var finishScan: ((TagData?, String?)->Void)?
-    
-    func beginScan() {
+    @objc(beginScan:)
+    func beginScan(command: CDVInvokedUrlCommand) {
         // self.finishScan = finishScan
         session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
         session?.alertMessage = "ハピホテタッチNにかざしてください"
