@@ -7,6 +7,8 @@
 
 // callback用NFCセッション
 import Foundation
+import UIKit
+import CoreNFC
 
 class NfcSession: NSObject, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
