@@ -38,7 +38,7 @@ import CoreNFC
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         // 複数検出した場合
          self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "The plugin succeeded");
-         self.commandDelegate!.send(self.pluginResult, callbackId: self.command.callbackId);
+         self.commandDelegate!.send(self.pluginResult, callbackId: self.command.callbackId!);
         // if tags.count > 1 {
         //     // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
         //     self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
