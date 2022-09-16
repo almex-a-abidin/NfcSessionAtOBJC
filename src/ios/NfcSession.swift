@@ -14,11 +14,11 @@ import CoreNFC
 @objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
-    var finishScan: ((TagData?, String?)->Void)?
+    var command: CDVInvokedUrlCommand?
 
     @objc(beginScan:)
-    func beginScan(finishScan: @escaping ((TagData?,String?)-> Void)) {
-        self.finishScan = finishScan
+    func beginScan(command: CDVInvokedUrlCommand) {
+        self.command = command
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
         self.session?.alertMessage = "ハピホテタッチNにかざしてください"
         self.session?.begin()
@@ -37,8 +37,8 @@ import CoreNFC
     
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         // 複数検出した場合
-        //  self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "The plugin succeeded");
-        //  self.commandDelegate!.send(self.pluginResult, callbackId: self.command.callbackId!);
+         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "The plugin succeeded");
+         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
         // if tags.count > 1 {
         //     // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
         //     self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
