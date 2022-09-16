@@ -12,7 +12,7 @@ import CoreNFC
 
 class NfcSession: NSObject {
     var session: NFCTagReaderSession?
-    var finishScan: ((TagData?, String?)->Void)?
+    // var finishScan: ((TagData?, String?)->Void)?
     
     func beginScan() {
         // self.finishScan = finishScan
