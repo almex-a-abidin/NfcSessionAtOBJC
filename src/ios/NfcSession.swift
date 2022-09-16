@@ -13,6 +13,8 @@ import CoreNFC
 @objc(NfcSession) class NfcSession: CDVPlugin {
     var session: NFCTagReaderSession?
     // var finishScan: ((TagData?, String?)->Void)?
+
+    @available(iOS 13)
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
         // self.finishScan = finishScan
