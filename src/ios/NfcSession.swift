@@ -47,7 +47,7 @@ import CoreNFC
             // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-            self.session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
         }
         
         // タグがなかった場合
