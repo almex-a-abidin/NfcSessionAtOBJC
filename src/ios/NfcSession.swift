@@ -13,11 +13,11 @@ import CoreNFC
 @available(iOS 13, *)
 class NfcSession: NSObject, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
-    // var finishScan: ((TagData?, String?)->Void)?
+    var finishScan: ((String?)->Void)?
     
     func beginScan() {
         // self.finishScan = finishScan
-        session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
+        session = NFCTagReaderSession(pollingOption: NFCTagReaderSession.PollingOption..iso14443, delegate: self)
         session?.alertMessage = "ハピホテタッチNにかざしてください"
         session?.begin()
     }
