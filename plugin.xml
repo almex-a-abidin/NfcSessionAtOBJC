@@ -1,19 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-nfc-session-atobjc" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-   <name>NfcSessionAtOBJC</name>
-   <js-module name="NfcSessionAtOBJC" src="www/NfcSessionAtOBJC.js">
-      <clobbers target="cordova.plugins.NfcSessionAtOBJC" />
+<plugin id="nfc-session" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+   <name>NfcSession</name>
+   <js-module name="NfcSession" src="www/NfcSession.js">
+      <clobbers target="cordova.plugins.NfcSession" />
    </js-module>
    <platform name="ios">
       <config-file parent="/*" target="config.xml">
-         <feature name="NfcSessionAtOBJC">
-            <param name="ios-package" value="NfcSessionAtOBJC" />
+         <feature name="NfcSession">
+            <param name="ios-package" value="NfcSession" />
          </feature>
       </config-file>
-      <header-file src="src/ios/NfcSessionAtOBJC.h" />
-      <source-file src="src/ios/NfcSessionAtOBJC.m" />
-
-      <header-file src="src/ios/TagDataAtOBJC.h" />
-      <source-file src="src/ios/TagDataAtOBJC.m" />
+      <source-file src="src/ios/NfcSession.swift" />
    </platform>
 </plugin>
