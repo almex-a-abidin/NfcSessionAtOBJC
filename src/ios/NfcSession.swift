@@ -57,7 +57,7 @@ import CoreNFC
             self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
         }
         
-        if case .miFare(let miFareTag) = tag {
+        // if case .miFare(let miFareTag) = tag {
         //     let tagData = TagData()
         //     // タグの種類（mifare）確定
         //     tagData.tagType = tag
@@ -118,11 +118,11 @@ import CoreNFC
         //             }
         //         }
         //     }
-        } else {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-            self.session?.invalidate()
-        }
+        // } else {
+        //     self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
+        //     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+        //     self.session?.invalidate()
+        // }
     }
 }
 
