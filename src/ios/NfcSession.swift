@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreNFC
 
+@available(iOS 13, *)
 class NfcSession: NSObject, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
     var finishScan: ((String?)->Void)?
