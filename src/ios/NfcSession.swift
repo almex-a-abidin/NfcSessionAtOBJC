@@ -42,7 +42,9 @@ import CoreNFC
             name: "Art John Abidin",
             age: "29"
         }
-         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: sample);
+         let data1 =  try JSONSerialization.data(withJSONObject: sample, options: JSONSerialization.WritingOptions.prettyPrinted)
+         let convertedString = String(data: data1, encoding: String.Encoding.utf8)
+         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: convertedString);
          self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
         // if tags.count > 1 {
         //     // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
