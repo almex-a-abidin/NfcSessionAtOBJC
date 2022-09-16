@@ -11,11 +11,13 @@ import UIKit
 import CoreNFC
 
 @available(iOS 13, *)
-class NfcSession: NSObject, NFCTagReaderSessionDelegate {
+@objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
     var finishScan: ((String?)->Void)?
-    
-    func beginScan() {
+    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
+
+    @objc(beginScan:)
+    func beginScan(command: CDVInvokedUrlCommand) {
         print("begin scanning")
         // self.finishScan = finishScan
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
