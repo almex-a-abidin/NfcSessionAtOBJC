@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 import CoreNFC
 
-class NfcSession: NSObject, NFCTagReaderSessionDelegate {
+@objc(NfcSession) class NfcSession: NSObject, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
     var finishScan: ((TagData?, String?)->Void)?
     
+    @objc(beginScan:)
     func beginScan(finishScan: @escaping ((TagData?,String?)-> Void)) {
         self.finishScan = finishScan
         session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
