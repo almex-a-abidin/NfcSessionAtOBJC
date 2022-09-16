@@ -16,10 +16,12 @@ class NfcSession: NSObject, NFCTagReaderSessionDelegate {
     var finishScan: ((String?)->Void)?
     
     func beginScan() {
+        println("begin scanning")
         // self.finishScan = finishScan
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
         self.session?.alertMessage = "ハピホテタッチNにかざしてください"
         self.session?.begin()
+
     }
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
