@@ -114,11 +114,11 @@ class NfcSession: NSObject, NFCTagReaderSessionDelegate {
     }
 }
 
-class TagData {
-    var uid: Data = Data()
-    var isLock: Bool?
-    var tagType: NFCTag?
-    var miFareFamily: NFCMiFareFamily = .unknown
-    var getVersion: Data = Data()
-    var recordLength: Int = -1
-}
+// class TagData {
+//     var uid: Data = Data()
+//     var isLock: Bool?
+//     var tagType: NFCTag?
+//     var miFareFamily: NFCMiFareFamily = .unknown
+//     var getVersion: Data = Data()
+//     var recordLength: Int = -1
+// }
