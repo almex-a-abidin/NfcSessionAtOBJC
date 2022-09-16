@@ -34,7 +34,8 @@ import CoreNFC
         self.pluginResult = CDVPluginResult (status: CDVCommandStatus_OK, messageAs: data);
     }
 
-    fun setErrorCommand(message: String?) {
+    @objc(setErrorCommand:)
+    func setErrorCommand(message: String?) {
         self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: message);
     }
 
