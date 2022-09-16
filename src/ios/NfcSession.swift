@@ -25,26 +25,6 @@ import CoreNFC
 
     }
 
-    @objc(setPluginResult:)
-    func setPluginResult( tag: TagData?,message: String?) {
-        var data = {
-            tag: tag,
-            message: message
-        }
-        self.pluginResult = CDVPluginResult (status: CDVCommandStatus_OK, messageAs: data);
-    }
-
-    @objc(setErrorCommand:)
-    func setErrorCommand(message: String?) {
-        self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: message);
-    }
-
-
-
-    @objc(send:)
-    func send() {
-        self.commandDelegate!.send(self.pluginResult, callbackId: self.command.callbackId);
-    }
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         // 何もしない
@@ -53,24 +33,20 @@ import CoreNFC
     func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
         // 画面を閉じる
         self.session = nil
-        self.send()
     }
     
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         // 複数検出した場合
         if tags.count > 1 {
-            self.setErrorCommand("読み取りに失敗しました。再度お試しください。")
+            // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
             session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-            self.send()
             return
         }
         
         // タグがなかった場合
         guard let tag = tags.first else {
             // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
-            self.setErrorCommand("読み取りに失敗しました。再度お試しください。")
             session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-            self.send()
             return
         }
         
