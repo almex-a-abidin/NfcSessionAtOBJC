@@ -11,6 +11,6 @@
          </feature>
       </config-file>
       <source-file src="src/ios/NfcSession.swift" />
-      <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+      <dependency id="cordova-plugin-add-swift-support" version="1.7.2"/>
    </platform>
 </plugin>
