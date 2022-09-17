@@ -69,7 +69,9 @@ import CoreNFC
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: String(describing: tagData));
+                    let jsonData = try JSONEncoder().encode(tagData)
+                    let jsonString = String(data: jsonData, encoding: .utf8)!
+                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: String(describing: jsonString));
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
