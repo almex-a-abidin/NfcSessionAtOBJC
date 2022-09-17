@@ -25,19 +25,19 @@ import CoreNFC
 
     }
 
-    func checkNFCMiFareFamily(data : NFCMiFareFamily) -> String {
+    func checkNFCMiFareFamily(data : NFCMiFareFamily?) -> String {
         switch data {
-        case .unknown:
-            return "pluunknowns"
-        case .ultralight:
-            return "ultralight"
-        case .plus:
-            return "plus"
-        case .desfire:
-            return "desfire"
+            case .unknown:
+                return "unknown"
+            case .ultralight:
+                return "ultralight"
+            case .plus:
+                return "plus"
+            case .desfire:
+                return "desfire"
 
-        default:
-            return "pluunknowns"
+            default:
+                return "unknown"
         }
     }
 
