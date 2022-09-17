@@ -74,14 +74,13 @@ import CoreNFC
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
                 
-        //         miFareTag.queryNDEFStatus { status, capacity, error in
-        //             if error != nil {
-        //                 self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
-        //                 session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-        //                 return
-        //             }
-        //             // ロック情報
-        //             tagData.isLock = status == .readOnly
+                miFareTag.queryNDEFStatus { status, capacity, error in
+                    if error != nil {
+                        //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                        self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                    }
+                    // ロック情報
+                    tagData.isLock = status == .readOnly
                     
         //             miFareTag.readNDEF { message, error in
         //                 // エラーの有無確認
@@ -117,7 +116,7 @@ import CoreNFC
         //                     session.invalidate()
         //                 }
         //             }
-        //         }
+                }
             }
         } else {
             //self.finishScan?(nil, "ハピホテタッチNではありません。")
