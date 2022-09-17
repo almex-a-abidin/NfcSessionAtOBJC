@@ -59,13 +59,13 @@ import CoreNFC
         // }
         
         if case .miFare(let miFareTag) = tag {
-        //     let tagData = TagData()
-        //     // タグの種類（mifare）確定
-        //     tagData.tagType = tag
-        //     // UID
-        //     tagData.uid = miFareTag.identifier
-        //     // familly
-        //     tagData.miFareFamily = miFareTag.mifareFamily
+            let tagData = TagData()
+            // タグの種類（mifare）確定
+            tagData.tagType = tag
+            // UID
+            tagData.uid = miFareTag.identifier
+            // familly
+            tagData.miFareFamily = miFareTag.mifareFamily
             
         //     session.connect(to: tag) { error in
         //         if error != nil {
@@ -127,11 +127,11 @@ import CoreNFC
     }
 }
 
-// class TagData {
-//     var uid: Data = Data()
-//     var isLock: Bool?
-//     var tagType: NFCTag?
-//     var miFareFamily: NFCMiFareFamily = .unknown
-//     var getVersion: Data = Data()
-//     var recordLength: Int = -1
-// }
+class TagData {
+    var uid: Data = Data()
+    var isLock: Bool?
+    var tagType: NFCTag?
+    var miFareFamily: NFCMiFareFamily = .unknown
+    var getVersion: Data = Data()
+    var recordLength: Int = -1
+}
