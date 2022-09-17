@@ -11,7 +11,7 @@ import UIKit
 import CoreNFC
 
 @available(iOS 13, *)
-@objc(NfcSession) class NfcSession: NSObject, CDVPlugin, NFCTagReaderSessionDelegate {
+@objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
