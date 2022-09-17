@@ -59,13 +59,13 @@ import CoreNFC
         // }
         
         if case .miFare(let miFareTag) = tag {
-            var tagData = []
+            var tagData = [String: String]()
             // タグの種類（mifare）確定
-            tagData["tagType"] = tag
+            tagData["tagType"] = String(tag)
             // UID
-            tagData["uid"] = miFareTag.identifier
+            tagData["uid"] = String(miFareTag.identifier)
             // familly
-            tagData["miFareFamily"] = miFareTag.mifareFamily
+            tagData["miFareFamily"] = String(miFareTag.mifareFamily)
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
