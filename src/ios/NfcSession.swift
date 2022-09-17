@@ -25,6 +25,7 @@ import CoreNFC
 
     }
 
+    @objc(checkNFCMiFareFamily:)
     func checkNFCMiFareFamily(data : NFCMiFareFamily?) -> String {
         switch data {
             case .unknown:
