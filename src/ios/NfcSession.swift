@@ -70,7 +70,7 @@ import CoreNFC
             self.session?.connect(to: tag) { error in
                 if error != nil {
                     var result = [
-                        "tagType" : tagData.tagType,
+                        "tagType" : tagData.tagType?,
                         "uid" : tagData.uid,
                         "miFareFamily" : tagData.miFareFamily,
                         "message" : "読み取りに失敗しました。再度お試しください。"
