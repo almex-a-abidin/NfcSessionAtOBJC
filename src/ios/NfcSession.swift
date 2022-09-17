@@ -61,7 +61,7 @@ import CoreNFC
         if case .miFare(let miFareTag) = tag {
             var tagData = [String: String]()
             // タグの種類（mifare）確定
-            tagData["tagType"] = toString(tag)
+            tagData["tagType"] = tag
             // UID
             // tagData["uid"] = String(miFareTag.identifier)
             // familly
