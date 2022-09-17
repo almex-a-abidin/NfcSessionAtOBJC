@@ -11,7 +11,7 @@ import UIKit
 import CoreNFC
 
 @available(iOS 13, *)
-@objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
+@objc(NfcSession) class NfcSession: NSObject, CDVPlugin, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
@@ -69,13 +69,7 @@ import CoreNFC
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    var result = [
-                        "tagType" : tagData.tagType?,
-                        "uid" : tagData.uid,
-                        "miFareFamily" : tagData.miFareFamily,
-                        "message" : "読み取りに失敗しました。再度お試しください。"
-                    ]
-                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
+                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: String(describing: tagData));
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
