@@ -51,6 +51,7 @@ import CoreNFC
         }
         
         // タグがなかった場合
+        let tag = tags.first!
         // guard let tag = tags.first else {
         //     // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
         //     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
