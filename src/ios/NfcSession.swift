@@ -25,6 +25,22 @@ import CoreNFC
 
     }
 
+    func checkNFCMiFareFamily(data : NFCMiFareFamily) -> String {
+        switch data {
+        case .unknown:
+            return "pluunknowns"
+        case .ultralight:
+            return "ultralight"
+        case .plus:
+            return "plus"
+        case .desfire:
+            return "desfire"
+
+        default:
+            return "pluunknowns"
+        }
+    }
+
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         // 何もしない
@@ -69,9 +85,11 @@ import CoreNFC
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    let jsonData = try JSONEncoder().encode(tagData)
-                    // let jsonString = String(data: jsonData, encoding: .utf8)!
-                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: String(describing: jsonString));
+                    var result = [
+                        "miFareFamily" : self.checkNFCMiFareFamily(miFareTag.mifareFamily),
+                        "message" : "読み取りに失敗しました。再度お試しください。"
+                    ]
+                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
