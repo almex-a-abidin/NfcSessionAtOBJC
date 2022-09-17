@@ -41,6 +41,8 @@ import CoreNFC
         //     "name": "Art John Abidin",
         //     "age": "29"
         // ]
+        print(tags)
+        
         if tags.count > 1 {
             // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
@@ -49,10 +51,10 @@ import CoreNFC
         }
         
         // タグがなかった場合
-        guard let tag = tags.first else {
-            // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
-            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-        }
+        // guard let tag = tags.first else {
+        //     // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
+        //     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+        // }
         
         // if case .miFare(let miFareTag) = tag {
         //     let tagData = TagData()
