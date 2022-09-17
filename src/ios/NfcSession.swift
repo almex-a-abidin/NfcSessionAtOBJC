@@ -67,7 +67,7 @@ import CoreNFC
             // familly
             tagData.miFareFamily = miFareTag.mifareFamily
             
-        //     session.connect(to: tag) { error in
+            self.session?.connect(to: tag) { error in
         //         if error != nil {
         //             self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
         //             session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
@@ -118,7 +118,7 @@ import CoreNFC
         //                 }
         //             }
         //         }
-        //     }
+            }
         } else {
             //self.finishScan?(nil, "ハピホテタッチNではありません。")
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
