@@ -59,19 +59,24 @@ import CoreNFC
         // }
         
         if case .miFare(let miFareTag) = tag {
-            var tagData = [String: String]()
+            var tagData = TagData()
             // タグの種類（mifare）確定
-            tagData["tagType"] = tag
+            tagData.tagType = tag
             // UID
-            // tagData["uid"] = String(miFareTag.identifier)
+            tagData.uid = miFareTag.identifier
             // familly
-            // tagData["miFareFamily"] = String(miFareTag.mifareFamily)
+            tagData.miFareFamily = miFareTag.mifareFamily
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    tagData["message"] = "読み取りに失敗しました。再度お試しください。"
-                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: tagData);
-                    // self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                    var result = [
+                        "tagType" : tagData.tagType,
+                        "uid" : tagData.uid,
+                        "miFareFamily" : tagData.miFareFamily,
+                        "message" : "読み取りに失敗しました。再度お試しください。"
+                    ]
+                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
+                    self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
                 
