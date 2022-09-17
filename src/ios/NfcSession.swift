@@ -41,7 +41,6 @@ import CoreNFC
         //     "name": "Art John Abidin",
         //     "age": "29"
         // ]
-        print(tags) 
         if tags.count > 1 {
             // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
