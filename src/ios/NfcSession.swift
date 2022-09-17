@@ -119,11 +119,11 @@ import CoreNFC
         //             }
         //         }
         //     }
+        } else {
+            //self.finishScan?(nil, "ハピホテタッチNではありません。")
+            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            self.session?.invalidate()
         }
-        //else {
-        //     //self.finishScan?(nil, "ハピホテタッチNではありません。")
-        //     self.session?.invalidate()
-        // }
     }
 }
 
