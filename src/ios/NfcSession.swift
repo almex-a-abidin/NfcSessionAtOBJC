@@ -77,7 +77,7 @@ import CoreNFC
             self.session?.connect(to: tag) { error in
                 if error != nil {
                     var data = [
-                        UID : uid,
+                        UID : uid
                     ]
                     self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
@@ -94,14 +94,14 @@ import CoreNFC
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
                     // ロック情報
-                    var isLock = status == .readOnly
-                    var recordLength = 0
+                    //tagData.isLock = status == .readOnly
+                    
                     miFareTag.readNDEF { message, error in
                         // エラーの有無確認
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                               recordLength = 0
+                                //tagData.recordLength = 0
                             } else {
                                 // 403以外のエラーはエラーとして処理する
                                 //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
