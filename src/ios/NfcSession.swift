@@ -72,15 +72,15 @@ import CoreNFC
             }            
 
             // // familly
-            var miFareFamily = miFareTag.mifareFamily as String
+            //var miFareFamily = miFareTag.mifareFamily as String
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    var data = [
-                        UID : uid,
-                        MIFAREFAMILY : miFareFamily
-                    ]
-                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
+                    // var data = [
+                    //     UID : uid,
+                    //     MIFAREFAMILY : miFareFamily
+                    // ]
+                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
