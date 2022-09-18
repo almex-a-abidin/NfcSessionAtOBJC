@@ -128,11 +128,11 @@ import CoreNFC
     }
 }
 
-// struct TagData: Codable {
-//     var uid: Data = Data()
-//     var isLock: Bool?
-//     var tagType: NFCTag?
-//     var miFareFamily: NFCMiFareFamily = .unknown
-//     var getVersion: Data = Data()
-//     var recordLength: Int = -1
-// }
+struct TagData: Codable {
+    var uid: Data = Data()
+    var isLock: Bool?
+    var tagType: NFCTag?
+    var miFareFamily: NFCMiFareFamily = .unknown
+    var getVersion: Data = Data()
+    var recordLength: Int = -1
+}
