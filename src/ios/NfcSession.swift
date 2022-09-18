@@ -86,11 +86,7 @@ import CoreNFC
                 
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
-                        var data = [
-                            UID : uid
-                        ]
-                        self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
-                        self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                        //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
                     // ロック情報
