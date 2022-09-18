@@ -15,6 +15,13 @@ import CoreNFC
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
+    let UID = "uid"
+    let ISLOCK = "isLock"
+    let TAGTYPE = "tagType"
+    let MIFAREFAMILY =  "miFareFamily"
+    let GETVERSION = "getVersion"
+    let RECORDLENGHT =  "recordLength"
+
 
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
@@ -40,39 +47,40 @@ import CoreNFC
         //     "name": "Art John Abidin",
         //     "age": "29"
         // ]
-        print("tags")
-        print(tags)
         
         if tags.count > 1 {
-            // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
         }
         
         // タグがなかった場合
-        // let tag = tags.first!
-
-        guard let tag = tags.first! else {
-            // self.finishScan?(nil, "読み取りに失敗しました。再度お試しください。")
-            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-            return
-        }
+        let tag = tags.first!
         
         if case .miFare(let miFareTag) = tag {
             
             // var tagData = TagData()
             // // タグの種類（mifare）確定
             // tagData.tagType = tag
-            // // UID
-            // tagData.uid = miFareTag.identifier
+
+            // UID
+            var byteData = [UInt8]()
+            miFare.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            var uid = "0"
+            byteData.forEach {
+                uid.append(String($0, radix: 16))
+            }            
+
             // // familly
-            // tagData.miFareFamily = miFareTag.mifareFamily
+            var miFareFamily = miFareTag.mifareFamily as String
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    
-                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
+                    var data = [
+                        UID : uid,
+                        MIFAREFAMILY : miFareFamily
+                    ]
+                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
