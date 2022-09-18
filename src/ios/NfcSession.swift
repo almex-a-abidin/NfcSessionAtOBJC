@@ -115,19 +115,13 @@ import CoreNFC
                                 self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                                 self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                return
+                                // return
                             }
                         } else {
                             // エラーがなかったのでmessageのrecordsを取得
                             guard let records = message?.records else {
                                 // messageオブジェクトがnilのため、エラーとする。
-                                 var data = [
-                                    UID : uid,
-                                    MESSAGE : "読み取りに失敗しました。再度お試しください。",
-                                    RECORDLENGHT : recordLength
-                                ]
-                                self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
-                                self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                                 return
                             }
