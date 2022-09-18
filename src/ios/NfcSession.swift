@@ -40,6 +40,7 @@ import CoreNFC
         //     "name": "Art John Abidin",
         //     "age": "29"
         // ]
+        print("tags")
         print(tags)
         
         if tags.count > 1 {
@@ -58,6 +59,7 @@ import CoreNFC
         // }
         
         if case .miFare(let miFareTag) = tag {
+            
             // var tagData = TagData()
             // // タグの種類（mifare）確定
             // tagData.tagType = tag
@@ -126,11 +128,11 @@ import CoreNFC
     }
 }
 
-struct TagData: Codable {
-    var uid: Data = Data()
-    var isLock: Bool?
-    var tagType: NFCTag?
-    var miFareFamily: NFCMiFareFamily = .unknown
-    var getVersion: Data = Data()
-    var recordLength: Int = -1
-}
+// struct TagData: Codable {
+//     var uid: Data = Data()
+//     var isLock: Bool?
+//     var tagType: NFCTag?
+//     var miFareFamily: NFCMiFareFamily = .unknown
+//     var getVersion: Data = Data()
+//     var recordLength: Int = -1
+// }
