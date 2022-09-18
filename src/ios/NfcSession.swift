@@ -107,13 +107,7 @@ import CoreNFC
                                recordLength = 0
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                var data = [
-                                    UID : uid,
-                                    MESSAGE : "読み取りに失敗しました。再度お試しください。",
-                                    RECORDLENGHT : recordLength
-                                ]
-                                self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
-                                self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                                 // return
                             }
