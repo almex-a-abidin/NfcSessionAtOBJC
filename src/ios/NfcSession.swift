@@ -21,7 +21,6 @@ import CoreNFC
     let MIFAREFAMILY =  "miFareFamily"
     let GETVERSION = "getVersion"
     let RECORDLENGHT =  "recordLength"
-    let MESSAGE = "message"
 
 
     @objc(beginScan:)
@@ -79,7 +78,6 @@ import CoreNFC
                 if error != nil {
                     var data = [
                         UID : uid,
-                        MESSAGE : "読み取りに失敗しました。再度お試しください。"
                     ]
                     self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
@@ -89,8 +87,7 @@ import CoreNFC
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
                         var data = [
-                            UID : uid,
-                            MESSAGE : "読み取りに失敗しました。再度お試しください。"
+                            UID : uid
                         ]
                         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
