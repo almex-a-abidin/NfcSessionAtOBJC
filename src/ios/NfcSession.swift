@@ -64,12 +64,12 @@ import CoreNFC
             // tagData.tagType = tag
 
             // UID
-            var byteData = [UInt8]()
-            miFare.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-            var uid = "0"
-            byteData.forEach {
-                uid.append(String($0, radix: 16))
-            }            
+            // var byteData = [UInt8]()
+            // miFare.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            // var uid = "0"
+            // byteData.forEach {
+            //     uid.append(String($0, radix: 16))
+            // }            
 
             // // familly
             //var miFareFamily = miFareTag.mifareFamily as String
