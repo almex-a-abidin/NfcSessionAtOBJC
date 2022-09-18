@@ -84,40 +84,40 @@ import CoreNFC
                     // ロック情報
                     //tagData.isLock = status == .readOnly
                     
-        //             miFareTag.readNDEF { message, error in
-        //                 // エラーの有無確認
-        //                 if let error = error {
-        //                     if (error as NSError).code == 403 {
-        //                         // 403 はレコードを未編集時のエラーのため正しい
-        //                         tagData.recordLength = 0
-        //                     } else {
-        //                         // 403以外のエラーはエラーとして処理する
-        //                         self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
-        //                         session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-        //                         return
-        //                     }
-        //                 } else {
-        //                     // エラーがなかったのでmessageのrecordsを取得
-        //                     guard let records = message?.records else {
-        //                         // messageオブジェクトがnilのため、エラーとする。
-        //                         self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
-        //                         session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-        //                         return
-        //                     }
-        //                     tagData.recordLength = records.count
-        //                 }
+                    miFareTag.readNDEF { message, error in
+                        // エラーの有無確認
+                        if let error = error {
+                            if (error as NSError).code == 403 {
+                                // 403 はレコードを未編集時のエラーのため正しい
+                                //tagData.recordLength = 0
+                            } else {
+                                // 403以外のエラーはエラーとして処理する
+                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                // return
+                            }
+                        } else {
+                            // エラーがなかったのでmessageのrecordsを取得
+                            guard let records = message?.records else {
+                                // messageオブジェクトがnilのため、エラーとする。
+                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                // return
+                            }
+                            // tagData.recordLength = records.count
+                        }
                         
-        //                 // getVersion
-        //                 miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
-        //                     if error != nil {
-        //                         self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
-        //                         session.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-        //                     }
-        //                     tagData.getVersion = data
-        //                     self.finishScan?(tagData, nil)
-        //                     session.invalidate()
-        //                 }
-        //             }
+                        // getVersion
+                        miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
+                            if error != nil {
+                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                            }
+                            // tagData.getVersion = data
+                            // self.finishScan?(tagData, nil)
+                            self.session?.invalidate()
+                        }
+                    }
                 }
             }
         } else {
