@@ -58,13 +58,13 @@ import CoreNFC
         // }
         
         if case .miFare(let miFareTag) = tag {
-            var tagData = TagData()
-            // タグの種類（mifare）確定
-            tagData.tagType = tag
-            // UID
-            tagData.uid = miFareTag.identifier
-            // familly
-            tagData.miFareFamily = miFareTag.mifareFamily
+            // var tagData = TagData()
+            // // タグの種類（mifare）確定
+            // tagData.tagType = tag
+            // // UID
+            // tagData.uid = miFareTag.identifier
+            // // familly
+            // tagData.miFareFamily = miFareTag.mifareFamily
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
@@ -80,7 +80,7 @@ import CoreNFC
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
                     // ロック情報
-                    tagData.isLock = status == .readOnly
+                    //tagData.isLock = status == .readOnly
                     
         //             miFareTag.readNDEF { message, error in
         //                 // エラーの有無確認
@@ -126,7 +126,7 @@ import CoreNFC
     }
 }
 
-class TagData {
+struct TagData: Codable {
     var uid: Data = Data()
     var isLock: Bool?
     var tagType: NFCTag?
