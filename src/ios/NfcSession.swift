@@ -102,7 +102,7 @@ import CoreNFC
                                 // messageオブジェクトがnilのため、エラーとする。
                                 //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                // return
+                                return
                             }
                             // tagData.recordLength = records.count
                         }
