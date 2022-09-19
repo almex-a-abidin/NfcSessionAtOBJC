@@ -64,21 +64,22 @@ import CoreNFC
             // tagData.tagType = tag
 
             // UID
-            var byteData = [UInt8]()
-            miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-            var uid = "0"
-            byteData.forEach {
-                uid.append(String($0, radix: 16))
-            }            
+            // var byteData = [UInt8]()
+            // miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            // var uid = "0"
+            // byteData.forEach {
+            //     uid.append(String($0, radix: 16))
+            // }
 
+            var data = miFareTag.identifier as Data  
+            let desiredString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)           
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: desiredString);
+            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             // familly
-            var miFareFamily = miFareTag.mifareFamily. as String
+            // var miFareFamily = miFareTag.mifareFamily. as String
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    var data = [
-                        UID : uid
-                    ]
                     self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
                     self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
