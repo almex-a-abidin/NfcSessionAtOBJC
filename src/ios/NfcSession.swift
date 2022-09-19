@@ -115,13 +115,13 @@ import CoreNFC
                             }
                         } else {
                             // エラーがなかったのでmessageのrecordsを取得
-                            guard let records = message?.records else {
-                                // messageオブジェクトがnilのため、エラーとする。
-                                self.cdvCallbackSuccess()
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                return
-                            }
-                            self.recordCount = String(records.count)
+                            // guard let records = message?.records else {
+                            //     // messageオブジェクトがnilのため、エラーとする。
+                            //     self.cdvCallbackSuccess()
+                            //     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                            //     return
+                            // }
+                            // self.recordCount = String(records.count)
                         }
                         
                         // getVersion
@@ -130,6 +130,9 @@ import CoreNFC
                                 self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
+               
+                            // var result = data as Data
+                            // self.version = String(decoding: result, as: UTF8.self)
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
