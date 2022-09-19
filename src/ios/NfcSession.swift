@@ -18,14 +18,14 @@ import CoreNFC
     var uid : String = "0"
     var locked : String = "false"
     var recordCount : String = "0"
-    var nfcVersion : String = "asd"
+    var version : String = ""
 
     //callback success with data
     func cdvCallbackSuccess() {
         var result = [
             "uid" : uid,
             "locked" : locked,
-            "nfcVersion" : nfcVersion,
+            "version" : uid,
             "recordLength" : recordCount
         ]
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
