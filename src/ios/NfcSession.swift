@@ -16,17 +16,20 @@ import CoreNFC
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
-    var locked : String = "falseaaa"
+    var locked : String = "false"
     var recordCount : String = "0"
     var nfcVersion : String = ""
 
     //callback success with data
     func cdvCallbackSuccess() {
         var result = [
-            "uid" : uid,
             "locked" : locked,
             "recordLength" : recordCount
         ]
+
+        if(!self.uid.isEmpty) {
+            result["uid"] = self.uid.isEmpty
+        }
 
         if(!self.nfcVersion.isEmpty) {
             result["version"] = self.nfcVersion
@@ -110,18 +113,11 @@ import CoreNFC
                             // エラーがなかったのでmessageのrecordsを取得
                             if( message?.records != nil) {
                                 let records = message!.records
-                                self.recordCount = "1231"
+                                self.recordCount = String(records.count)
                             } else {
                                 self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
-                            // guard let records = message?.records else {
-                            //     // messageオブジェクトがnilのため、エラーとする。
-                            //     self.cdvCallbackSuccess()
-                            //     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                            //     return
-                            // }
-                            // self.recordCount = String(records.count)
                         }
                         
                         // getVersion
@@ -131,8 +127,8 @@ import CoreNFC
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
                
-                            // var result = data as Data
-                            // self.version = String(decoding: result, as: UTF8.self)
+                            var result = data as Data
+                            self.version = String(decoding: result, as: UTF8.self)
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
