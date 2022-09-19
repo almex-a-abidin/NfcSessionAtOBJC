@@ -21,7 +21,7 @@ import CoreNFC
     let RECORDLENGHT =  "recordLength"
     var uid = "0"
     var locked = false
-    var record_count = 0
+    var record_count = "0"
     var version = ""
 
 
@@ -40,7 +40,7 @@ import CoreNFC
         return [
             UID : uid,
             ISLOCK : locked,
-            RECORDLENGHT : String(record_count),
+            RECORDLENGHT : record_count,
             GETVERSION : version
         ]
     }
