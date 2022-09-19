@@ -21,14 +21,14 @@ import CoreNFC
     let RECORDLENGHT =  "recordLength"
     var uid = "0"
     var locked = "false"
-    var record_count = "0"
+    var recordCount = "0"
     var version = ""
 
     func getData() -> [String: String] {
         return [
             UID : uid,
             ISLOCK : locked,
-            RECORDLENGHT : record_count,
+            RECORDLENGHT : recordCount,
             GETVERSION : version
         ]
     }
@@ -106,22 +106,22 @@ import CoreNFC
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                                //tagData.recordLength = 0
+                                self.recordCount = "0"
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                                self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                                 // return
                             }
                         } else {
                             // エラーがなかったのでmessageのrecordsを取得
-                            // guard let records = message?.records else {
-                            //     // messageオブジェクトがnilのため、エラーとする。
-                            //     //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
-                            //     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                            //     return
-                            // }
-                            // tagData.recordLength = records.count
+                            guard let records = message?.records else {
+                                // messageオブジェクトがnilのため、エラーとする。
+                                self.cdvCallbackSuccess()
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                return
+                            }
+                            self.recordCount = String(records.count)
                         }
                         
                         // getVersion
