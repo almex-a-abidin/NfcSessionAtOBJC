@@ -81,7 +81,7 @@ import CoreNFC
                 tempUID.append(String($0, radix: 16))
             }
             self.uid = tempUID
-            
+
             self.session?.connect(to: tag) { error in
                 if error != nil {
                     self.cdvCallbackSuccess()
@@ -131,7 +131,14 @@ import CoreNFC
                             }
                
                             // var baseData = data.base64EncodedData()
-                            //self.nfcVersion = String(data: data, encoding: .utf8)
+                            let valueArray: UInt32 = data.withUnsafeBytes { $0.pointee }
+                            var temVersion: String = ""
+                            for value in valueArray {
+                                if let scalar = UnicodeScalar(value) {
+                                    temVersion.append(Character(scalar))
+                                }
+                            }
+                            self.nfcVersion = temVersion
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
