@@ -24,7 +24,7 @@ import CoreNFC
     func cdvCallbackSuccess() {
         var result = [
             "uid" : uid,
-            "locked" : false,
+            "locked" : locked,
             "recordLength" : recordCount
         ]
 
@@ -57,10 +57,6 @@ import CoreNFC
     
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         // 複数検出した場合
-        // var sample = [
-        //     "name": "Art John Abidin",
-        //     "age": "29"
-        // ]
         
         if tags.count > 1 {
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
@@ -112,6 +108,13 @@ import CoreNFC
                             }
                         } else {
                             // エラーがなかったのでmessageのrecordsを取得
+                            if( message?.records != nil) {
+                                let records = message!.records
+                                self.recordCount = String(records.count)
+                            } else {
+                                self.cdvCallbackSuccess()
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                            }
                             // guard let records = message?.records else {
                             //     // messageオブジェクトがnilのため、エラーとする。
                             //     self.cdvCallbackSuccess()
