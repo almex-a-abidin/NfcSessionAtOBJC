@@ -25,7 +25,7 @@ import CoreNFC
         var result = [
             "uid" : uid,
             "locked" : locked,
-            "version" : "version",
+            "version" : version,
             "recordLength" : recordCount
         ]
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
