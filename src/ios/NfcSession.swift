@@ -16,7 +16,7 @@ import CoreNFC
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
-    var locked : String = "false"
+    var locked : String = "falseaaa"
     var recordCount : String = "0"
     var nfcVersion : String = ""
 
