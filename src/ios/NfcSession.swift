@@ -35,11 +35,12 @@ import CoreNFC
 
     }
 
+    @objc(getData:)
     func getData() {
         return [
             UID : uid,
             ISLOCK : locked,
-            RECORDLENGHT : record_count,
+            RECORDLENGHT : String(record_count),
             GETVERSION : version
         ]
     }
