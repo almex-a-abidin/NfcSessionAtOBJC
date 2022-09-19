@@ -18,7 +18,7 @@ import CoreNFC
     var uid : String = "0"
     var locked : String = "false"
     var recordCount : String = "0"
-    var nfcVersion : String = ""
+    var nfcVersion : String = "asd"
 
     //callback success with data
     func cdvCallbackSuccess() {
