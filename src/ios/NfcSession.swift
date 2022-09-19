@@ -111,12 +111,12 @@ import CoreNFC
                             }
                         } else {
                             // エラーがなかったのでmessageのrecordsを取得
-                            guard let records = message?.records else {
-                                // messageオブジェクトがnilのため、エラーとする。
-                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                return
-                            }
+                            // guard let records = message?.records else {
+                            //     // messageオブジェクトがnilのため、エラーとする。
+                            //     //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                            //     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                            //     return
+                            // }
                             // tagData.recordLength = records.count
                         }
                         
