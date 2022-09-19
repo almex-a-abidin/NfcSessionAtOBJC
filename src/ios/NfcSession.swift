@@ -130,9 +130,6 @@ import CoreNFC
                                 self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
-               
-                            var result = data as Data
-                            self.getVersion = String(decoding: result, as: UTF8.self)
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
