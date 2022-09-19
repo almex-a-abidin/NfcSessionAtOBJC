@@ -84,8 +84,8 @@ import CoreNFC
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.getData());
-                    // self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.getData());
+                    self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
                 
