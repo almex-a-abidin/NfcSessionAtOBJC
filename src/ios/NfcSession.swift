@@ -65,16 +65,13 @@ import CoreNFC
             // tagData.tagType = tag
 
             // UID
-            // var byteData = [UInt8]()
-            // miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-            // var uid = "0"
-            // byteData.forEach {
-            //     uid.append(String($0, radix: 16))
-            // }
-
-            var data = miFareTag.identifier as Data  
-            let desiredString = String(decoding: data, as: UTF8.self)      
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: desiredString);
+            var byteData = [UInt8]()
+            miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            var uid = "0"
+            byteData.forEach {
+                uid.append(String($0, radix: 16))
+            }          
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: uid);
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             // familly
             // var miFareFamily = miFareTag.mifareFamily. as String
