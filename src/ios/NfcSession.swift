@@ -17,13 +17,22 @@ import CoreNFC
     var command: CDVInvokedUrlCommand?
     let UID = "uid"
     let ISLOCK = "locked"
-    let GETVERSION = "getVersion"
+    let GETVERSION = "version"
     let RECORDLENGHT =  "recordLength"
     var uid = "0"
-    var locked = false
+    var locked = "false"
     var record_count = "0"
     var version = ""
 
+    @objc(getData:)
+    func getData() -> [String: String] {
+        return [
+            UID : uid,
+            ISLOCK : locked,
+            RECORDLENGHT : record_count,
+            GETVERSION : version
+        ]
+    }
 
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
