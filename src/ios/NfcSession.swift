@@ -23,10 +23,10 @@ import CoreNFC
     //callback success with data
     func cdvCallbackSuccess() {
         var data = [
-            "uid" : self.uid,
-            "locked" : self.locked,
-            "version" : self.recordCount,
-            "recordLength" : self.version
+            "uid" : uid,
+            "locked" : locked,
+            "version" : recordCount,
+            "recordLength" : version
         ]
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
