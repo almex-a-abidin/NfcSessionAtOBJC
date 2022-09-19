@@ -29,7 +29,7 @@ import CoreNFC
         ]
 
         if(!self.nfcVersion.isEmpty) {
-            result["version"] = self.version
+            result["version"] = self.nfcVersion
         }
 
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
