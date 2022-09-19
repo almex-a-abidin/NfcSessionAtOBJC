@@ -24,7 +24,6 @@ import CoreNFC
     var record_count = "0"
     var version = ""
 
-    @objc(getData:)
     func getData() -> [String: String] {
         return [
             UID : uid,
