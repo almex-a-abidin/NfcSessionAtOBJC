@@ -21,14 +21,14 @@ import CoreNFC
     let RECORDLENGHT =  "recordLength"
     var uid = "0"
     var locked = "false"
-    var record_count = "0"
+    var recordCount = "0"
     var version = ""
 
     func getData() -> [String: String] {
         return [
             UID : uid,
             ISLOCK : locked,
-            RECORDLENGHT : record_count,
+            RECORDLENGHT : recordCount,
             GETVERSION : version
         ]
     }
@@ -106,7 +106,7 @@ import CoreNFC
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                                self.record_count = "0"
+                                self.recordCount = "0"
                             } else {
                                 // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess()
