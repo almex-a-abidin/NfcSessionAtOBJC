@@ -37,14 +37,7 @@ import CoreNFC
 
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-        self.resetData()
-    }
 
-    func resetData() {
-        self.uid  = ""
-        self.locked = "false"
-        self.recordCount = "0"
-        self.nfcVersion = ""
     }
 
     @objc(beginScan:)
@@ -83,9 +76,11 @@ import CoreNFC
             // UID
             var byteData = [UInt8]()
             miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            var tempUID = "0"
             byteData.forEach {
-                uid.append(String($0, radix: 16))
+                tempUID.append(String($0, radix: 16))
             }
+            self.uid = tempUID
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
