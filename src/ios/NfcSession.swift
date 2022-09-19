@@ -16,9 +16,7 @@ import CoreNFC
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
     let UID = "uid"
-    let ISLOCK = "isLock"
-    let TAGTYPE = "tagType"
-    let MIFAREFAMILY =  "miFareFamily"
+    let ISLOCK = "locked"
     let GETVERSION = "getVersion"
     let RECORDLENGHT =  "recordLength"
     var uid = "0"
@@ -35,6 +33,15 @@ import CoreNFC
         self.session?.alertMessage = "ハピホテタッチNにかざしてください"
         self.session?.begin()
 
+    }
+
+    func getData() {
+        return [
+            UID : uid,
+            ISLOCK : locked,
+            RECORDLENGHT : record_count,
+            GETVERSION : version
+        ]
     }
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
@@ -77,8 +84,8 @@ import CoreNFC
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    // self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: data);
-                    // self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.getData());
+                    self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
                 
