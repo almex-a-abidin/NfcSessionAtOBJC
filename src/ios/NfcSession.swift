@@ -24,7 +24,7 @@ import CoreNFC
     func cdvCallbackSuccess() {
         var result = [
             "uid" : uid,
-            "locked" : locked,
+            "locked" : false,
             "recordLength" : recordCount
         ]
 
