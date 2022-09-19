@@ -15,10 +15,10 @@ import CoreNFC
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
     var command: CDVInvokedUrlCommand?
-    var uid = "0"
-    var locked = "false"
-    var recordCount = "0"
-    var version = ""
+    var uid : String = "0"
+    var locked : String = "false"
+    var recordCount : String = "0"
+    var version : String = ""
 
     //callback success with data
     func cdvCallbackSuccess() {
