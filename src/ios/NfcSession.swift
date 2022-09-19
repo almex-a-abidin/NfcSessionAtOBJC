@@ -21,14 +21,14 @@ import CoreNFC
     let RECORDLENGHT =  "recordLength"
     var uid = "0"
     var locked = "false"
-    var recordCount = "0"
+    var record_count = "0"
     var version = ""
 
     func getData() -> [String: String] {
         return [
             UID : uid,
             ISLOCK : locked,
-            RECORDLENGHT : recordCount,
+            RECORDLENGHT : record_count,
             GETVERSION : version
         ]
     }
@@ -96,9 +96,9 @@ import CoreNFC
                     }
                     // ロック情報
                     if(status == .readOnly) {
-                        self.isLock = "true"
+                        self.locked = "true"
                     } else {
-                        self.isLock = "false"
+                        self.locked = "false"
                     }
 
                     miFareTag.readNDEF { message, error in
@@ -106,10 +106,10 @@ import CoreNFC
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                                self.recordCount = "0"
+                                //tagData.recordLength = 0
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                self.cdvCallbackSuccess()
+                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                                 // return
                             }
