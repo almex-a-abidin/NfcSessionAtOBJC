@@ -110,7 +110,7 @@ import CoreNFC
                             // エラーがなかったのでmessageのrecordsを取得
                             if( message?.records != nil) {
                                 let records = message!.records
-                                self.recordCount = String(records.count)
+                                self.recordCount = "1231"
                             } else {
                                 self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
