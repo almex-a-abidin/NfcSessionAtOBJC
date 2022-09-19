@@ -106,7 +106,7 @@ import CoreNFC
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                                self.recordLength = "0"
+                                self.record_count = "0"
                             } else {
                                 // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess()
