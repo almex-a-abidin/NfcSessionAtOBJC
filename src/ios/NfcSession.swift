@@ -127,11 +127,12 @@ import CoreNFC
                         // getVersion
                         miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
                             if error != nil {
-                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                                self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
-                            // tagData.getVersion = data
-                            // self.finishScan?(tagData, nil)
+               
+                            self.getVersion = String(decoding: data, as: UTF8.self)
+                            self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
                     }
