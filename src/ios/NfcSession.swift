@@ -28,7 +28,7 @@ import CoreNFC
         ]
 
         if(!self.uid.isEmpty) {
-            result["uid"] = self.uid.isEmpty
+            result["uid"] = self.uid
         }
 
         if(!self.nfcVersion.isEmpty) {
