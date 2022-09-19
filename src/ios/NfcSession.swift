@@ -131,11 +131,8 @@ import CoreNFC
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
                
-                            var byteData = [UInt8]()
-                            data.withUnsafeBytes { byteData.append(contentsOf: $0) }
-                            byteData.forEach {
-                                self.getVersion.append(String($0, radix: 16))
-                            }
+                            var result = data as Data
+                            self.getVersion = String(decoding: result, as: UTF8.self)
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
