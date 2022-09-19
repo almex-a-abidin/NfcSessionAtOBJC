@@ -76,10 +76,6 @@ import CoreNFC
         
         if case .miFare(let miFareTag) = tag {
             
-            // var tagData = TagData()
-            // // タグの種類（mifare）確定
-            // tagData.tagType = tag
-
             // UID
             var byteData = [UInt8]()
             miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
@@ -95,21 +91,25 @@ import CoreNFC
                 
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
-                        //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                        self.cdvCallbackSuccess()
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
                     // ロック情報
-                    //tagData.isLock = status == .readOnly
-                    
+                    if(status == .readOnly) {
+                        self.isLock = "true"
+                    } else {
+                        self.isLock = "false"
+                    }
+
                     miFareTag.readNDEF { message, error in
                         // エラーの有無確認
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                                //tagData.recordLength = 0
+                                self.recordLength = "0"
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                //self.finishScan?(tagData, "読み取りに失敗しました。再度お試しください。")
+                                self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                                 // return
                             }
