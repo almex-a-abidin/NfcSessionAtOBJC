@@ -37,6 +37,14 @@ import CoreNFC
 
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+        self.resetData()
+    }
+
+    func resetData() {
+        self.uid  = ""
+        self.locked = "false"
+        self.recordCount = "0"
+        self.nfcVersion = ""
     }
 
     @objc(beginScan:)
