@@ -127,8 +127,8 @@ import CoreNFC
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
                
-                            // var result = data as Data
-                            // self.version = String(decoding: result, as: UTF8.self)
+                            // var baseData = data.base64EncodedData()
+                            String(data: data, encoding: .utf8)
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
