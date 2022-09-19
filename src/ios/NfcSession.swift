@@ -28,7 +28,7 @@ import CoreNFC
             "recordLength" : recordCount
         ]
 
-        if(self.version != "") {
+        if(!self.version.isEmpty) {
             result["version"] = self.version
         }
 
