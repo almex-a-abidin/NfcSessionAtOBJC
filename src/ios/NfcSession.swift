@@ -33,6 +33,12 @@ import CoreNFC
         ]
     }
 
+    //callback success with data
+    func cdvCallbackSuccess() {
+        self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.getData());
+        self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+    }
+
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
         print("beginScan")
@@ -83,8 +89,7 @@ import CoreNFC
             
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.getData());
-                    self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+                    self.cdvCallbackSuccess()
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
                 
