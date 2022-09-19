@@ -73,9 +73,8 @@ import CoreNFC
             // }
 
             var data = miFareTag.identifier as Data  
-            let desiredString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-            let sample = desiredString as String           
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: sample);
+            let desiredString = String(decoding: data, as: UTF8.self)      
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: desiredString);
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             // familly
             // var miFareFamily = miFareTag.mifareFamily. as String
