@@ -106,11 +106,6 @@ import CoreNFC
                     }
                     // ロック情報
                     self.locked = status == .readOnly ? "true" : "false"
-                    // if(status == .readOnly) {
-                    //     self.locked = "true"
-                    // } else {
-                    //     self.locked = "false"
-                    // }
 
                     miFareTag.readNDEF { message, error in
                         // エラーの有無確認
