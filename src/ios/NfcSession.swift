@@ -16,16 +16,21 @@ import CoreNFC
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The plugin Failed");
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
-    var locked : String = "false"
-    var recordCount : String = "-1"
+    var locked : String = "no data"
+    var recordCount : String = "no data"
     var nfcVersion : String = ""
 
     //callback success with data
     func cdvCallbackSuccess() {
-        var result = [
-            "locked" : locked,
-            "recordLength" : recordCount
-        ]
+        var result = [String: String]()
+
+        if(self.locked != "no data") {
+            result["locked"] = self.locked
+        }
+
+        if(self.recordCount != "no data") {
+            result["recordCount"] = self.recordCount
+        }
 
         if(!self.uid.isEmpty) {
             result["uid"] = self.uid
