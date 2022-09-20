@@ -105,11 +105,12 @@ import CoreNFC
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
                     // ロック情報
-                    if(status == .readOnly) {
-                        self.locked = "true"
-                    } else {
-                        self.locked = "false"
-                    }
+                    self.locked = status == .readOnly ? "true" : "false"
+                    // if(status == .readOnly) {
+                    //     self.locked = "true"
+                    // } else {
+                    //     self.locked = "false"
+                    // }
 
                     miFareTag.readNDEF { message, error in
                         // エラーの有無確認
