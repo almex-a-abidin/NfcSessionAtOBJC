@@ -131,7 +131,7 @@ import CoreNFC
                             }
                
                             // var baseData = data.base64EncodedData()
-                            String(data: data!, encoding: String.Encoding.utf8)
+                            tring(data: data, encoding: String.Encoding.utf8) as String
                             //self.nfcVersion = backToString
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
