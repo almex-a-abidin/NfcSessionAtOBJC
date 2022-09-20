@@ -84,13 +84,13 @@ import CoreNFC
         if case .miFare(let miFareTag) = tag {
             
             // UID
-            var byteData = [UInt8]()
-            miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-            var tempUID = "0"
-            byteData.forEach {
-                tempUID.append(String($0, radix: 16))
-            }
-            self.uid = tempUID
+            // var byteData = [UInt8]()
+            // miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            // var tempUID = "0"
+            // byteData.forEach {
+            //     tempUID.append(String($0, radix: 16))
+            // }
+            self.uid = miFareTag.identifier.map{ String(format:"%.2hhx", $0)}.joined()
 
             self.session?.connect(to: tag) { error in
                 if error != nil {
