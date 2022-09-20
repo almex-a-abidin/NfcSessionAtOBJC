@@ -86,7 +86,7 @@ import CoreNFC
             // UID
             var byteData = [UInt8]()
             miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-            var tempUID = ""
+            var tempUID = "0"
             byteData.forEach {
                 tempUID.append(String($0, radix: 16))
             }
