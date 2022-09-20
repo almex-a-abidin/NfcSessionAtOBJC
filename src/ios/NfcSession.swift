@@ -69,84 +69,85 @@ import CoreNFC
         }
         
         // タグがなかった場合
-        try {
-            let tag = tags.first!
-        
-            if case .miFare(let miFareTag) = tag {
-                
-                // UID
-                var byteData = [UInt8]()
-                miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-                var tempUID = "0"
-                byteData.forEach {
-                    tempUID.append(String($0, radix: 16))
-                }
-                self.uid = tempUID
+        //let tag = tags.first!
+        guard let tag = tags.first else {
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
+            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            return
+        }
 
-                self.session?.connect(to: tag) { error in
+        if case .miFare(let miFareTag) = tag {
+            
+            // UID
+            var byteData = [UInt8]()
+            miFareTag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
+            var tempUID = "0"
+            byteData.forEach {
+                tempUID.append(String($0, radix: 16))
+            }
+            self.uid = tempUID
+
+            self.session?.connect(to: tag) { error in
+                if error != nil {
+                    self.cdvCallbackSuccess()
+                    self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                }
+                
+                miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
                         self.cdvCallbackSuccess()
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
-                    
-                    miFareTag.queryNDEFStatus { status, capacity, error in
-                        if error != nil {
-                            self.cdvCallbackSuccess()
-                            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                        }
-                        // ロック情報
-                        if(status == .readOnly) {
-                            self.locked = "true"
-                        } else {
-                            self.locked = "false"
-                        }
+                    // ロック情報
+                    if(status == .readOnly) {
+                        self.locked = "true"
+                    } else {
+                        self.locked = "false"
+                    }
 
-                        miFareTag.readNDEF { message, error in
-                            // エラーの有無確認
-                            if let error = error {
-                                if (error as NSError).code == 403 {
-                                    // 403 はレコードを未編集時のエラーのため正しい
-                                    self.recordCount = String(0)
-                                } else {
-                                    // 403以外のエラーはエラーとして処理する
-                                    self.cdvCallbackSuccess()
-                                    self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                    return
-                                }
+                    miFareTag.readNDEF { message, error in
+                        // エラーの有無確認
+                        if let error = error {
+                            if (error as NSError).code == 403 {
+                                // 403 はレコードを未編集時のエラーのため正しい
+                                self.recordCount = String(0)
                             } else {
-                                // エラーがなかったのでmessageのrecordsを取得
-                                if( message?.records != nil) {
-                                    let records = message!.records
-                                    self.recordCount = String(records.count)
-                                } else {
-                                    self.cdvCallbackSuccess()
-                                    self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                }
-                            }
-                            
-                            // getVersion
-                            miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
-                                if error != nil {
-                                    self.cdvCallbackSuccess()
-                                    self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                }
-
-                                //convert data to hex string
-                                var byteData  = Data( bytes:[data.count - 1], count: 1 )
-                                byteData.append(data)
-                                self.nfcVersion = byteData.hexEncodedString()
+                                // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess()
-                                self.session?.invalidate()
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                return
                             }
+                        } else {
+                            // エラーがなかったのでmessageのrecordsを取得
+                            if( message?.records != nil) {
+                                let records = message!.records
+                                self.recordCount = String(records.count)
+                            } else {
+                                self.cdvCallbackSuccess()
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                            }
+                        }
+                        
+                        // getVersion
+                        miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
+                            if error != nil {
+                                self.cdvCallbackSuccess()
+                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                            }
+
+                            //convert data to hex string
+                            var byteData  = Data( bytes:[data.count - 1], count: 1 )
+                            byteData.append(data)
+                            self.nfcVersion = byteData.hexEncodedString()
+                            self.cdvCallbackSuccess()
+                            self.session?.invalidate()
                         }
                     }
                 }
-            } else {
-                //self.finishScan?(nil, "ハピホテタッチNではありません。")
-                self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-                self.session?.invalidate()
             }
-        } catch {
+        } else {
+            //self.finishScan?(nil, "ハピホテタッチNではありません。")
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             self.session?.invalidate()
         }
