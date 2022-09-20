@@ -13,7 +13,7 @@ import CoreNFC
 @available(iOS 13, *)
 @objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
     var session: NFCTagReaderSession?
-    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The Plugin Failed");
+    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The plugin Failed");
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
     var locked : String = "false"
@@ -147,6 +147,7 @@ import CoreNFC
                 self.session?.invalidate()
             }
         } catch {
+            self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "Error during the process");
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             self.session?.invalidate()
         }
