@@ -130,9 +130,9 @@ import CoreNFC
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
                
-                            // var baseData = data.base64EncodedData()
-                            String(data: data, encoding: String.Encoding.utf8) as String
-                            //self.nfcVersion = backToString
+                            var parameters  = Data( bytes:[data.count - 1], count: 1 )
+                            parameters.append(data)
+                            self.nfcVersion = parameters.hexEncodedString()
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
@@ -147,11 +147,10 @@ import CoreNFC
     }
 }
 
-// struct TagData: Codable {
-//     var uid: Data = Data()
-//     var isLock: Bool?
-//     var tagType: NFCTag?
-//     var miFareFamily: NFCMiFareFamily = .unknown
-//     var getVersion: Data = Data()
-//     var recordLength: Int = -1
-// }
+extension Data {
+    
+    func hexEncodedString() -> String {
+        let format = "%02hhX"
+        return map { String(format: format, $0) }.joined()
+    }
+}
