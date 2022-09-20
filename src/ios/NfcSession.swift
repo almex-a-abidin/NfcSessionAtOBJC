@@ -17,7 +17,7 @@ import CoreNFC
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
     var locked : String = "false"
-    var recordCount : String = "0"
+    var recordCount : String = "-1"
     var nfcVersion : String = ""
 
     //callback success with data
@@ -105,7 +105,7 @@ import CoreNFC
                         if let error = error {
                             if (error as NSError).code == 403 {
                                 // 403 はレコードを未編集時のエラーのため正しい
-                                self.recordCount = "0"
+                                self.recordCount = String(0)
                             } else {
                                 // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess()
