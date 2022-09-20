@@ -131,14 +131,8 @@ import CoreNFC
                             }
                
                             // var baseData = data.base64EncodedData()
-                            let valueArray: UInt32 = data.withUnsafeBytes { $0.pointee }
-                            var temVersion: String = ""
-                            for value in valueArray {
-                                if let scalar = UnicodeScalar(value) {
-                                    temVersion.append(Character(scalar))
-                                }
-                            }
-                            self.nfcVersion = temVersion
+                            var backToString = String(data: data!, encoding: String.Encoding.utf8) as String!
+                            self.nfcVersion = backToString
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
