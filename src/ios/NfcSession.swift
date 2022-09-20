@@ -110,7 +110,7 @@ import CoreNFC
                                 // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
-                                // return
+                                return
                             }
                         } else {
                             // エラーがなかったのでmessageのrecordsを取得
@@ -129,10 +129,11 @@ import CoreNFC
                                 self.cdvCallbackSuccess()
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
-               
-                            var parameters  = Data( bytes:[data.count - 1], count: 1 )
-                            parameters.append(data)
-                            self.nfcVersion = parameters.hexEncodedString()
+
+                            //convert data into hex string
+                            var byteData  = Data( bytes:[data.count - 1], count: 1 )
+                            byteData.append(data)
+                            self.nfcVersion = byteData.hexEncodedString()
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
                         }
