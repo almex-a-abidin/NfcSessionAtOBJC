@@ -42,7 +42,13 @@ import CoreNFC
 
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+    }
 
+
+    //callback error
+    func cdvCallbackError() {
+        self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
+        self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
     }
 
     @objc(beginScan:)
@@ -68,16 +74,14 @@ import CoreNFC
         // 複数検出した場合
         
         if tags.count > 1 {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            self.cdvCallbackError()
             self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
         }
         
         // タグがなかった場合
         //let tag = tags.first!
         guard let tag = tags.first else {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            self.cdvCallbackError()
             self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
             return
         }
@@ -148,8 +152,7 @@ import CoreNFC
                 }
             }
         } else {
-            //self.finishScan?(nil, "ハピホテタッチNではありません。")
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            self.cdvCallbackError()
             self.session?.invalidate()
         }
     }
