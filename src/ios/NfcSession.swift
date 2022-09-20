@@ -137,8 +137,6 @@ import CoreNFC
                             }
 
                             //convert data to hex string
-                            var byteData  = Data( bytes:[data.count - 1], count: 1 )
-                            byteData.append(data)
                             self.nfcVersion = data.hexEncodedString()
                             self.cdvCallbackSuccess()
                             self.session?.invalidate()
