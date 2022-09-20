@@ -147,7 +147,6 @@ import CoreNFC
                 self.session?.invalidate()
             }
         } catch {
-            self.pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "Error during the process");
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
             self.session?.invalidate()
         }
