@@ -13,11 +13,11 @@ import CoreNFC
 @available(iOS 13, *)
 @objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
     // エラー時の返却テキスト
-    let connectError = "読み取りに失敗しました。再度お試しください。"
-    let noMiFare = "ハピホテタッチNではありません。"
+    let connectError: String = "読み取りに失敗しました。再度お試しください。"
+    let noMiFare: String = "ハピホテタッチNではありません。"
     // システムで表示するテキスト
-    let startMessage = "ハピホテタッチNにかざしてください"
-    let errorMessage = "読み取れませんでした"
+    let startMessage: String = "ハピホテタッチNにかざしてください"
+    let errorMessage: String = "読み取れませんでした"
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The plugin Failed");
     var command: CDVInvokedUrlCommand?
@@ -27,7 +27,7 @@ import CoreNFC
     var nfcVersion : String = ""
 
     //callback success with data
-    func cdvCallbackSuccess(message: String) {
+    func cdvCallbackSuccess(message: String = "") {
         var result = [String: String]()
 
         if(!message.isEmpty) {
