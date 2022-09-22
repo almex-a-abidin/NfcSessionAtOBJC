@@ -25,7 +25,7 @@ import CoreNFC
     var locked : String = ""
     var recordCount : String = ""
     var nfcVersion : String = ""
-    var recordData: Data? = nil
+    var recordData: String = ""
 
     //callback success with data
     func cdvCallbackSuccess(message: String = "") {
@@ -33,6 +33,10 @@ import CoreNFC
 
         if(!message.isEmpty) {
             result["message"] = message
+        }
+
+        if(!self.recordData.isEmpty) {
+            result["recordData"] = self.recordData
         }
 
         if(!self.locked.isEmpty) {
@@ -69,13 +73,6 @@ import CoreNFC
         self.session?.begin()
     }
 
-    @objc(getRecordData:)
-    func getRecordData(command: CDVInvokedUrlCommand) {
-        if(self.recordData != nil) {
-            var cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "self.recordData!");
-            self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
-        }
-    }
 
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         // 何もしない
@@ -140,7 +137,7 @@ import CoreNFC
                                 
                                 if(records.count > 0) {
                                     if records[0].payload.count > 0 {
-                                        self.recordData = records[0].payload
+                                        self.recordData = records[0].payload.hexEncodedString()
                                     }
                                 }
 
