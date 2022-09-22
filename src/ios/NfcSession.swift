@@ -54,6 +54,11 @@ import CoreNFC
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
     }
 
+    func cdvCallbackError() {
+        self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: self.connectError);
+        self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+    }
+
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
         print("beginScan")
@@ -76,16 +81,14 @@ import CoreNFC
         // 複数検出した場合
         
         if tags.count > 1 {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            self.cdvCallbackError()
+            self.session?.invalidate(errorMessage: self.errorMessage)
         }
         
         // タグがなかった場合
         guard let tag = tags.first else {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            self.cdvCallbackError()
+            self.session?.invalidate(errorMessage: self.errorMessage)
             return
         }
 
@@ -97,13 +100,13 @@ import CoreNFC
             self.session?.connect(to: tag) { error in
                 if error != nil {
                     self.cdvCallbackSuccess(message: self.connectError)
-                    self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                    self.session?.invalidate(errorMessage: self.errorMessage)
                 }
                 
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
                         self.cdvCallbackSuccess(message: self.connectError)
-                        self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                        self.session?.invalidate(errorMessage: self.errorMessage)
                     }
                     // ロック情報
                     self.locked = status == .readOnly ? "true" : "false"
@@ -117,7 +120,7 @@ import CoreNFC
                             } else {
                                 // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess(message: self.connectError)
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: self.errorMessage)
                                 return
                             }
                         } else {
@@ -127,7 +130,7 @@ import CoreNFC
                                 self.recordCount = String(records.count)
                             } else {
                                 self.cdvCallbackSuccess(message: self.connectError)
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: self.errorMessage)
                             }
                         }
                         
@@ -135,7 +138,7 @@ import CoreNFC
                         miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
                             if error != nil {
                                 self.cdvCallbackSuccess(message: self.connectError)
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: self.errorMessage)
                             }
 
                             //convert data to hex string
