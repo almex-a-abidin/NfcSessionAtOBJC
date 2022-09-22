@@ -6,6 +6,10 @@ NfcSession.prototype.beginScan = function (success, error) {
     exec(success, error, 'NfcSession', 'beginScan', []);
 };
 
+NfcSession.prototype.getRecordData = function (success, error) {
+    exec(success, error, 'NfcSession', 'getRecordData', []);
+};
+
 
 if(!window.plugins)
     window.plugins = {};

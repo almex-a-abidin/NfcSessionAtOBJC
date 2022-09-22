@@ -68,7 +68,19 @@ import CoreNFC
         self.session?.alertMessage = self.startMessage
         self.session?.begin()
     }
-    
+
+    @objc(getRecordData:)
+    func getRecordData(command: CDVInvokedUrlCommand) {
+        self.command = command
+        if(self.recordData != nil) {
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.recordData!);
+            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+        } else {
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "0 record");
+            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+        }
+    }
+
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         // 何もしない
     }
