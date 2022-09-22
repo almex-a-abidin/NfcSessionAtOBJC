@@ -12,8 +12,14 @@ import CoreNFC
 
 @available(iOS 13, *)
 @objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
+    // エラー時の返却テキスト
+    let connectError = "読み取りに失敗しました。再度お試しください。"
+    let noMiFare = "ハピホテタッチNではありません。"
+    // システムで表示するテキスト
+    let startMessage = "ハピホテタッチNにかざしてください"
+    let errorMessage = "読み取れませんでした"
     var session: NFCTagReaderSession?
-    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The plugin Failed");
+    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: self.errorMessage);
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
     var locked : String = ""
@@ -49,9 +55,8 @@ import CoreNFC
         print("beginScan")
         self.command = command
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
-        self.session?.alertMessage = "ハピホテタッチNにかざしてください"
+        self.session?.alertMessage = self.startMessage
         self.session?.begin()
-
     }
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
@@ -67,16 +72,16 @@ import CoreNFC
         // 複数検出した場合
         
         if tags.count > 1 {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
+            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: self.errorMessage);
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            self.session?.invalidate(errorMessage: self.errorMessage)
         }
         
         // タグがなかった場合
         guard let tag = tags.first else {
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "読み取りに失敗しました。再度お試しください。");
             self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
-            self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+            self.session?.invalidate(errorMessage: self.errorMessage)
             return
         }
 
@@ -94,7 +99,7 @@ import CoreNFC
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
                         self.cdvCallbackSuccess()
-                        self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                        self.session?.invalidate(errorMessage: self.errorMessage    )
                     }
                     // ロック情報
                     self.locked = status == .readOnly ? "true" : "false"
@@ -108,7 +113,7 @@ import CoreNFC
                             } else {
                                 // 403以外のエラーはエラーとして処理する
                                 self.cdvCallbackSuccess()
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: self.errorMessage)
                                 return
                             }
                         } else {
@@ -118,7 +123,7 @@ import CoreNFC
                                 self.recordCount = String(records.count)
                             } else {
                                 self.cdvCallbackSuccess()
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: self.errorMessage)
                             }
                         }
                         
@@ -126,7 +131,7 @@ import CoreNFC
                         miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
                             if error != nil {
                                 self.cdvCallbackSuccess()
-                                self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
+                                self.session?.invalidate(errorMessage: self.errorMessage)
                             }
 
                             //convert data to hex string
