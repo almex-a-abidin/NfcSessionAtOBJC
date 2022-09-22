@@ -102,7 +102,7 @@ import CoreNFC
                 
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
-                        self.cdvCallbackSuccess()
+                        self.cdvCallbackSuccess(message: self.connectError)
                         self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                     }
                     // ロック情報
@@ -116,7 +116,7 @@ import CoreNFC
                                 self.recordCount = String(0)
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                self.cdvCallbackSuccess()
+                                self.cdvCallbackSuccess(message: self.connectError)
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                                 return
                             }
@@ -126,7 +126,7 @@ import CoreNFC
                                 let records = message!.records
                                 self.recordCount = String(records.count)
                             } else {
-                                self.cdvCallbackSuccess()
+                                self.cdvCallbackSuccess(message: self.connectError)
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
                         }
@@ -134,7 +134,7 @@ import CoreNFC
                         // getVersion
                         miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
                             if error != nil {
-                                self.cdvCallbackSuccess()
+                                self.cdvCallbackSuccess(message: self.connectError)
                                 self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                             }
 
@@ -147,7 +147,7 @@ import CoreNFC
                 }
             }
         } else {
-            self.cdvCallbackSuccess()
+            self.cdvCallbackSuccess(message: self.noMiFare)
             self.session?.invalidate()
         }
     }
