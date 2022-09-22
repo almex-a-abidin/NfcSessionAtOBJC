@@ -71,13 +71,12 @@ import CoreNFC
 
     @objc(getRecordData:)
     func getRecordData(command: CDVInvokedUrlCommand) {
-        self.command = command
         if(self.recordData != nil) {
-            self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.recordData!);
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            var cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.recordData!);
+            self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
         } else {
             self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "0 record");
-            self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
+            self.commandDelegate!.send(self.pluginResult, callbackId: command.callbackId);
         }
     }
 
