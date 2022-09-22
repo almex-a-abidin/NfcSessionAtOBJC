@@ -96,7 +96,7 @@ import CoreNFC
 
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    self.cdvCallbackSuccess()
+                    self.cdvCallbackSuccess(self.connectError)
                     self.session?.invalidate(errorMessage: "読み取りに失敗しました。再度お試しください。")
                 }
                 
