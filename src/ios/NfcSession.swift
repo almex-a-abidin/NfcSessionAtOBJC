@@ -19,7 +19,7 @@ import CoreNFC
     let startMessage: String = "ハピホテタッチNにかざしてください"
     let errorMessage: String = "読み取れませんでした"
     var session: NFCTagReaderSession?
-    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "The plugin Failed");
+    var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: self.errorMessage);
     var command: CDVInvokedUrlCommand?
     var uid : String = ""
     var locked : String = ""
@@ -59,7 +59,7 @@ import CoreNFC
         print("beginScan")
         self.command = command
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
-        self.session?.alertMessage = "ハピホテタッチNにかざしてください"
+        self.session?.alertMessage = self.startMessage
         self.session?.begin()
     }
     
