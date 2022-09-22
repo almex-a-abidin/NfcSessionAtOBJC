@@ -25,6 +25,7 @@ import CoreNFC
     var locked : String = ""
     var recordCount : String = ""
     var nfcVersion : String = ""
+    var recordData: Data? = nil
 
     //callback success with data
     func cdvCallbackSuccess(message: String = "") {
@@ -128,10 +129,18 @@ import CoreNFC
                             if( message?.records != nil) {
                                 let records = message!.records
                                 self.recordCount = String(records.count)
+                                
+                                if(records.count > 0) {
+                                    if records[0].payload.count > 0 {
+                                        self.recordData = records[0].payload
+                                    }
+                                }
+
                             } else {
                                 self.cdvCallbackSuccess(message: self.connectError)
                                 self.session?.invalidate(errorMessage: self.errorMessage)
                             }
+
                         }
                         
                         // getVersion
