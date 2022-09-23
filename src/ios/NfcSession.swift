@@ -67,7 +67,6 @@ import CoreNFC
 
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
-        print("beginScan")
         self.command = command
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
         self.session?.alertMessage = self.startMessage
@@ -76,9 +75,8 @@ import CoreNFC
 
     @objc(getRecordedData:)
     func getRecordedData(command: CDVInvokedUrlCommand) {
-        // print("beginScan")
-        // let cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
-        // self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
+        let cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: self.recordedData);
+        self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
     }
 
 
