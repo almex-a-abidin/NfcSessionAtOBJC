@@ -52,7 +52,7 @@ import CoreNFC
         }
 
         if(!self.nfcVersion.isEmpty) {
-            result["version"] = self.nfcVersion
+            result["version"] = self.nfcVersion 
         }
 
         self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
@@ -154,7 +154,7 @@ import CoreNFC
                                 self.cdvCallbackSuccess(message: self.connectError)
                                 self.session?.invalidate(errorMessage: self.errorMessage)
                             }
-
+                            let result = data.bytes()
                             //convert data to hex string
                             self.nfcVersion = data.hexEncodedString()
                             self.cdvCallbackSuccess()
@@ -175,5 +175,9 @@ extension Data {
     func hexEncodedString() -> String {
         let format = "%02hhX"
         return map { String(format: format, $0) }.joined()
+    }
+
+    func bytes() -> [UInt8] {
+        return [UInt8](self)
     }
 }
