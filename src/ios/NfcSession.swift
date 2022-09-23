@@ -76,9 +76,9 @@ import CoreNFC
 
     @objc(getRecordedData:)
     func getRecordedData(command: CDVInvokedUrlCommand) {
-        print("beginScan")
-        let cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
-        self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
+        // print("beginScan")
+        // let cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
+        // self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
     }
 
 
