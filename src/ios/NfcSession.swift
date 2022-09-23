@@ -26,6 +26,7 @@ import CoreNFC
     var recordCount : String = ""
     var nfcVersion : String = ""
     var recordData: String = ""
+    var recordedData: [UInt8] = [UInt8]()
 
     //callback success with data
     func cdvCallbackSuccess(message: String = "") {
@@ -71,6 +72,13 @@ import CoreNFC
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
         self.session?.alertMessage = self.startMessage
         self.session?.begin()
+    }
+
+    @objc(getRecordedData:)
+    func getRecordedData(command: CDVInvokedUrlCommand) {
+        print("beginScan")
+        let cdvResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
+        self.commandDelegate!.send(cdvResult, callbackId: command.callbackId);
     }
 
 
@@ -154,7 +162,7 @@ import CoreNFC
                                 self.cdvCallbackSuccess(message: self.connectError)
                                 self.session?.invalidate(errorMessage: self.errorMessage)
                             }
-                            let result = data.bytes()
+                            self.recordedData = data.bytes()
                             //convert data to hex string
                             self.nfcVersion = data.hexEncodedString()
                             self.cdvCallbackSuccess()
