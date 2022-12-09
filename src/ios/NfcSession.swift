@@ -176,7 +176,7 @@ import CoreNFC
             }
         } else {
             self.cdvCallbackError()
-            self.session?.invalidate(errorMessage: NfcSession.noMiFare)
+            self.session?.invalidate(errorMessage: self.noMiFare)
         }
     }
 }
