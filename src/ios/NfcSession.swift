@@ -16,8 +16,8 @@ import CoreNFC
     let connectError: String = "読み取りに失敗しました。再度お試しください。"
     let noMiFare: String = "ハピホテタッチNではありません。"
     // システムで表示するテキスト
-    let startMessage: String = "ハピホテタッチNにかざしてください"
-    let errorMessage: String = "読み取れませんでした"
+    static let startMessage: String = "ハピホテタッチNにかざしてください"
+    static let errorMessage: String = "読み取れませんでした"
     var session: NFCTagReaderSession?
     var pluginResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "読み取れませんでした");
     var command: CDVInvokedUrlCommand?
@@ -69,7 +69,7 @@ import CoreNFC
     func beginScan(command: CDVInvokedUrlCommand) {
         self.command = command
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
-        self.session?.alertMessage = self.startMessage
+        self.session?.alertMessage = NfcSession.startMessage
         self.session?.begin()
     }
 
@@ -94,13 +94,14 @@ import CoreNFC
         
         if tags.count > 1 {
             self.cdvCallbackError()
-            self.session?.invalidate(errorMessage: self.errorMessage)
+            self.session?.invalidate(errorMessage: NfcSession.errorMessage)
+            return
         }
         
         // タグがなかった場合
         guard let tag = tags.first else {
             self.cdvCallbackError()
-            self.session?.invalidate(errorMessage: self.errorMessage)
+            self.session?.invalidate(errorMessage: NfcSession.errorMessage)
             return
         }
 
@@ -111,14 +112,16 @@ import CoreNFC
 
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    self.cdvCallbackSuccess(message: self.connectError)
-                    self.session?.invalidate(errorMessage: self.errorMessage)
+                    self.cdvCallbackSuccess(message: NfcSession.connectError)
+                    self.session?.invalidate(errorMessage: NfcSession.errorMessage)
+                    return
                 }
                 
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
-                        self.cdvCallbackSuccess(message: self.connectError)
-                        self.session?.invalidate(errorMessage: self.errorMessage)
+                        self.cdvCallbackSuccess(message: NfcSession.connectError)
+                        self.session?.invalidate(errorMessage: NfcSession.errorMessage)
+                        return
                     }
                     // ロック情報
                     self.locked = status == .readOnly ? "true" : "false"
@@ -131,8 +134,8 @@ import CoreNFC
                                 self.recordCount = String(0)
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                self.cdvCallbackSuccess(message: self.connectError)
-                                self.session?.invalidate(errorMessage: self.errorMessage)
+                                self.cdvCallbackSuccess(message: NfcSession.connectError)
+                                self.session?.invalidate(errorMessage: NfcSession.errorMessage)
                                 return
                             }
                         } else {
@@ -148,8 +151,9 @@ import CoreNFC
                                 }
 
                             } else {
-                                self.cdvCallbackSuccess(message: self.connectError)
-                                self.session?.invalidate(errorMessage: self.errorMessage)
+                                self.cdvCallbackSuccess(message: NfcSession.connectError)
+                                self.session?.invalidate(errorMessage: NfcSession.errorMessage)
+                                return
                             }
 
                         }
@@ -157,8 +161,9 @@ import CoreNFC
                         // getVersion
                         miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
                             if error != nil {
-                                self.cdvCallbackSuccess(message: self.connectError)
-                                self.session?.invalidate(errorMessage: self.errorMessage)
+                                self.cdvCallbackSuccess(message: NfcSession.connectError)
+                                self.session?.invalidate(errorMessage: NfcSession.errorMessage)
+                                return
                             }
                             self.recordedData = data.bytes()
                             //convert data to hex string
@@ -171,7 +176,7 @@ import CoreNFC
             }
         } else {
             self.cdvCallbackSuccess(message: self.noMiFare)
-            self.session?.invalidate()
+            self.session?.invalidate(errorMessage: NfcSession.errorMessage)
         }
     }
 }
