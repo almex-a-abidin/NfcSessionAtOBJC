@@ -13,8 +13,8 @@ import CoreNFC
 @available(iOS 13, *)
 @objc(NfcSession) class NfcSession: CDVPlugin, NFCTagReaderSessionDelegate {
     // エラー時の返却テキスト
-    let connectError: String = "読み取りに失敗しました。再度お試しください。"
-    let noMiFare: String = "ハピホテタッチNではありません。"
+    static let connectError: String = "読み取りに失敗しました。再度お試しください。"
+    static let noMiFare: String = "ハピホテタッチNではありません。"
     // システムで表示するテキスト
     static let startMessage: String = "ハピホテタッチNにかざしてください"
     static let errorMessage: String = "読み取れませんでした"
@@ -32,6 +32,8 @@ import CoreNFC
     func cdvCallbackSuccess(message: String = "") {
         var result = [String: String]()
 
+        result["status"] = "true"
+        
         if(!message.isEmpty) {
             result["message"] = message
         }
@@ -60,13 +62,29 @@ import CoreNFC
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
     }
 
-    func cdvCallbackError() {
-        self.pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: self.connectError);
+    func cdvCallbackError(message: String = "") {
+        var result = [String: String]()
+        result["status"] = "false"
+        if message.isEmpty {
+            result["message"] = NfcSession.connectError
+        } else {
+            result["message"] = message
+        }
+            
+        self.pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result);
         self.commandDelegate!.send(self.pluginResult, callbackId: self.command!.callbackId);
     }
 
     @objc(beginScan:)
     func beginScan(command: CDVInvokedUrlCommand) {
+        // タグ情報の初期化
+        uid = ""
+        locked = ""
+        recordCount = ""
+        nfcVersion = ""
+        recordData = ""
+        recordedData = [UInt8]()
+        
         self.command = command
         self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
         self.session?.alertMessage = NfcSession.startMessage
@@ -175,8 +193,8 @@ import CoreNFC
                 }
             }
         } else {
-            self.cdvCallbackError()
-            self.session?.invalidate(errorMessage: self.noMiFare)
+            self.cdvCallbackError(message: NfcSession.noMiFare)
+            self.session?.invalidate(errorMessage: NfcSession.noMiFare)
         }
     }
 }
