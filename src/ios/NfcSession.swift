@@ -151,7 +151,7 @@ import CoreNFC
                                 }
 
                             } else {
-                                self.cdvCallbackSuccess(message: NfcSession.connectError)
+                                self.cdvCallbackError()
                                 self.session?.invalidate(errorMessage: NfcSession.errorMessage)
                                 return
                             }
