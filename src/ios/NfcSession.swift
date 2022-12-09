@@ -112,14 +112,14 @@ import CoreNFC
 
             self.session?.connect(to: tag) { error in
                 if error != nil {
-                    self.cdvCallbackSuccess(message: NfcSession.connectError)
+                    self.cdvCallbackError()
                     self.session?.invalidate(errorMessage: NfcSession.errorMessage)
                     return
                 }
                 
                 miFareTag.queryNDEFStatus { status, capacity, error in
                     if error != nil {
-                        self.cdvCallbackSuccess(message: NfcSession.connectError)
+                        self.cdvCallbackError()
                         self.session?.invalidate(errorMessage: NfcSession.errorMessage)
                         return
                     }
@@ -134,7 +134,7 @@ import CoreNFC
                                 self.recordCount = String(0)
                             } else {
                                 // 403以外のエラーはエラーとして処理する
-                                self.cdvCallbackSuccess(message: NfcSession.connectError)
+                                self.cdvCallbackError()
                                 self.session?.invalidate(errorMessage: NfcSession.errorMessage)
                                 return
                             }
@@ -161,7 +161,7 @@ import CoreNFC
                         // getVersion
                         miFareTag.sendMiFareCommand(commandPacket: Data([0x60])) { data, error in
                             if error != nil {
-                                self.cdvCallbackSuccess(message: NfcSession.connectError)
+                                self.cdvCallbackError()
                                 self.session?.invalidate(errorMessage: NfcSession.errorMessage)
                                 return
                             }
@@ -175,8 +175,8 @@ import CoreNFC
                 }
             }
         } else {
-            self.cdvCallbackSuccess(message: self.noMiFare)
-            self.session?.invalidate(errorMessage: NfcSession.errorMessage)
+            self.cdvCallbackError()
+            self.session?.invalidate(errorMessage: NfcSession.noMiFare)
         }
     }
 }
